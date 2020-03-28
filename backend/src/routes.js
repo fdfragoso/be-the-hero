@@ -20,7 +20,14 @@ const connection = require('./database/connection');
  * REQUEST BODY - REQUISITION BODY, USED TO CREATE OR UPDATE RESOURCES
  */
 
+ // route to list the ngos on the data bank
+ routes.get('/ngos', async (request, response) => {
+    const ngos = await connection.table('ngos').select('*');
 
+    return response.json(ngos);  
+});
+
+// route to insert ngo on the data bank
 routes.post('/ngos', async (request, response) => {
     
     const { name, email, whatsapp, city, uf } = request.body;
