@@ -5,10 +5,14 @@ module.exports = {
     async index(request, response) {
         const { page = 1 } = request.params;
 
+        const [count] = await connection('cases').count();
+
         const cases = await connection('cases')
           .limit(5)
           .offset((page - 1) * 5)
           .select('*');
+
+        response.header('X-Total-Count', count['count(*)']);
 
         return response.json(cases);
     },
