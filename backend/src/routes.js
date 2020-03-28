@@ -11,6 +11,7 @@ routes.get('/ngos', NgoController.index);
 // route to insert ngo on the data bank
 routes.post('/ngos', NgoController.create); 
 
+routes.get('/cases', CasesController.index);
 routes.post('/cases', CasesController.create);
 
 module.exports = routes;
