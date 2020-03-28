@@ -2,6 +2,7 @@ const express = require('express');
 
 const NgoController = require('./controllers/NgoController');
 const CasesController = require('./controllers/CasesController');
+const ProfileController = require('./controllers/ProfileController');
 
 const routes = express.Router();
 
@@ -20,7 +21,8 @@ routes.post('/cases', CasesController.create);
 // delete a case
 routes.delete('/cases/:id', CasesController.delete);
 
-
+// List the cases from a especific ngo
+routes.get('/profile', ProfileController.index);
 
 module.exports = routes;
 
