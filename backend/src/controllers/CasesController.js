@@ -20,5 +20,23 @@ module.exports = {
         });
 
         return response.json({ id });
+    },
+
+    async delete(request, response) {
+        const { id } = request.params;
+        const ngo_id = request.headers.authorization;
+
+        const cases = await connection('cases')
+          .where('id', id)
+          .select('ngo_id')
+          .first();
+
+        if(cases.ngo_id != ngo_id) {
+            return response.status(401).json({ error: 'Operation non authorized.'});  
+        }
+
+        await connection('cases').where('id', id).delete();
+
+        return response.status(204).send();
     }
 };
