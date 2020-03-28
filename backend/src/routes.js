@@ -1,6 +1,8 @@
 const express = require('express');
 
-const NgoController = require('./controllers/NgoController')
+const NgoController = require('./controllers/NgoController');
+const CasesController = require('./controllers/CasesController');
+
 const routes = express.Router();
 
 // route to list the ngos on the data bank
@@ -8,6 +10,8 @@ routes.get('/ngos', NgoController.index);
 
 // route to insert ngo on the data bank
 routes.post('/ngos', NgoController.create); 
+
+routes.post('/cases', CasesController.create);
 
 module.exports = routes;
 
