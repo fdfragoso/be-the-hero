@@ -3,8 +3,12 @@ const express = require('express');
 const NgoController = require('./controllers/NgoController');
 const CasesController = require('./controllers/CasesController');
 const ProfileController = require('./controllers/ProfileController');
+const SessionController = require('./controllers/SessionController');
 
 const routes = express.Router();
+
+// route  login
+routes.post('/sessions', SessionController.create);
 
 // route to list the ngos on the data bank
 routes.get('/ngos', NgoController.index); 
