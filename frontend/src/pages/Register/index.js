@@ -18,7 +18,7 @@ export default function Register() {
                         Sign up and help people find cases from NGOs.
                     </p>
 
-                    <Link className="back-link" to="/register">
+                    <Link className="back-link" to="/">
                         <FiArrowLeft size={16} color="#E02041" />
                         Sign up
                     </Link>
