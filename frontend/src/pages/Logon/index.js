@@ -16,10 +16,12 @@ export default function Logon() {
                     <h1>Sing in</h1>
 
                     <input placeholder="Your ID" />
-                    <button type="submit">Enter</button>
+                    <button className="button" type="submit">Enter</button>
 
-                    <FiLogIn size={16} color="#E02041"/>
-                    <a href="/register">Sign up</a>
+                    <a href="/register">
+                        <FiLogIn size={16} color="#E02041" />
+                        Sign up
+                    </a>
                 </form>
             </section>
 
