@@ -8,8 +8,30 @@ import './styles.css';
 import logoImg from '../../assets/logo.svg';
 
 export default function Register() {
-    function handleRegister(e){
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [whatsapp, setWhatsapp] = useState('');
+    const [city, setCity] = useState('');
+    const [uf, setUf] = useState('');
+
+    async function handleRegister(e){
         e.preventDefault();
+
+        const data = {
+            name,
+            email,
+            whatsapp,
+            city,
+            uf,
+        };
+
+        try {
+            const response = await api.post('ngos', data);
+
+            alert(`Your access ID: ${response.data.id}`);
+        } catch (err) {
+            alert(`Error to sign up, please try again.`);
+        }
     }
 
     return (
@@ -30,13 +52,38 @@ export default function Register() {
                 </section>
 
                 <form onSubmit={handleRegister}>
-                    <input placeholder="NGO Name" />
-                    <input type="email" placeholder="Email" />
-                    <input placeholder="Whatsapp" />
+                    <input 
+                        placeholder="NGO Name"
+                        value={name}
+                        onChange={e => setName(e.target.value)} 
+                    />
+                    
+                    <input 
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)} 
+                    />
+
+                    <input 
+                        placeholder="Whatsapp"
+                        value={whatsapp}
+                        onChange={e => setWhatsapp(e.target.value)} 
+                    />
 
                     <div className="input-group">
-                        <input placeholder="City" />
-                        <input placeholder="UF" style={{ width: 80 }} />
+                        <input 
+                            placeholder="City"
+                            value={city}
+                            onChange={e => setCity(e.target.value)}
+                        />
+
+                        <input
+                            placeholder="UF"
+                            style={{ width: 80 }}
+                            value={uf}
+                            onChange={e => setUf(e.target.value)} 
+                        />
                     </div>
 
                     <button className="button" type="submit">Sign Up</button>
