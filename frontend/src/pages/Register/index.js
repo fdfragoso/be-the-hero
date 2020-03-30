@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from '../../services/api';
@@ -13,6 +13,8 @@ export default function Register() {
     const [whatsapp, setWhatsapp] = useState('');
     const [city, setCity] = useState('');
     const [uf, setUf] = useState('');
+
+    const history = useHistory();
 
     async function handleRegister(e){
         e.preventDefault();
@@ -29,6 +31,8 @@ export default function Register() {
             const response = await api.post('ngos', data);
 
             alert(`Your access ID: ${response.data.id}`);
+
+            history.push('/');
         } catch (err) {
             alert(`Error to sign up, please try again.`);
         }
