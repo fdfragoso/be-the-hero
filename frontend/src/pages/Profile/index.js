@@ -23,6 +23,18 @@ export default function Profile() {
             setCases(response.data);
         })
     }, [ngoId]);
+
+    async function handleDeleteCase(id) {
+        try {
+            await api.delete(`cases/${id}`, {
+              headers: {
+                Authorization: ngoId,
+              }
+            });
+        } catch (err) {
+            alert('Error to delete case. Please try again');
+        }
+    }
      
     return (
         <div className="profile-container">
@@ -50,7 +62,7 @@ export default function Profile() {
                         <strong>VALUE:</strong>
                         <p>{Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(_case.value)}</p>
 
-                        <button type="button">  
+                        <button onClick={() => handleDeleteCase(_case.id)} type="button">  
                             <FiTrash2 size={20} color={"#a8a8b3"} />                 
                         </button>
                     </li>
