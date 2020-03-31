@@ -1,12 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import './styles.css';
 
+import api from '../../services/api';
+
 import logoImg from '../../assets/logo.svg';
 
 export default function NewCase() {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [value, setValue] = useState('');
+
+    const ngoId = localStorage.getItem('ngoId');
+
+    const history = useHistory();
+
+    async function handleNewCase(e) {
+        e.preventDefault();
+
+        const data = {
+            title,
+            description,
+            value,
+        };
+
+        try {
+            await api.post('cases', data, {
+                headers: {
+                    Authorization: ngoId,
+                }
+            })
+
+            history.push('/profile'); 
+        } catch (err) {
+            alert('Error to save a new case. Please try again.')
+        }
+    }
+
     return (
         <div className="new-case-container">
         <div className="content">
@@ -24,10 +56,22 @@ export default function NewCase() {
                 </Link>
             </section>
 
-            <form>
-                <input placeholder="Case Title" />
-                <textarea placeholder="Description" />
-                <input placeholder="Value in DKK" />
+            <form onSubmit={handleNewCase}>
+                <input 
+                    placeholder="Case Title"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)} 
+                />
+                <textarea 
+                    placeholder="Description"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                />
+                <input 
+                    placeholder="Value in DKK"
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                />
                 
 
                 <button className="button" type="submit">Sign Up</button>
