@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
+
+import api from '../../services/api';
 
 import './styles.css';
 
 import logoImg from '../../assets/logo.svg';
 
 export default function Profile() {
+    const [cases, setCases] = useState([]);
+
+    const ngoName = localStorage.getItem('ngoName');
+    const ngoId = localStorage.getItem('ngoId');
+
+    useEffect(() => {
+        api.get('profile', {
+            headers: {
+                Authorization: ngoId,  
+            }
+        }).then(response => {
+            setCases(response.data);
+        })
+    }, [ngoId]);
+     
     return (
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Be the Hero"/>
-                <span>Welcome, Red Cross</span>
+                    <span>Welcome, {ngoName}</span>
 
                 <Link className="button" to="/cases/new">Register new case</Link>
                 <button type="button">
@@ -22,65 +39,22 @@ export default function Profile() {
             <h1>Registered cases</h1>
 
             <ul>
-                <li>
-                    <strong>CASE:</strong>
-                    <p>Test case</p>
+                {cases.map(_case => (
+                    <li key={_case.id}>
+                        <strong>CASE:</strong>
+                        <p>{_case.title}</p>
 
-                    <strong>DESCRIPTION:</strong>
-                    <p>Test case</p>
-                    
-                    <strong>VALUE:</strong>
-                    <p>$120.00</p>
+                        <strong>DESCRIPTION:</strong>
+                        <p>{_case.description}</p>
+                        
+                        <strong>VALUE:</strong>
+                        <p>{Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(_case.value)}</p>
 
-                    <button type="button">  
-                        <FiTrash2 size={20} color={"#a8a8b3"} />                 
-                    </button>
-                </li>
-
-                <li>
-                    <strong>CASE:</strong>
-                    <p>Test case</p>
-
-                    <strong>DESCRIPTION:</strong>
-                    <p>Test case</p>
-                    
-                    <strong>VALUE:</strong>
-                    <p>$120.00</p>
-
-                    <button type="button">  
-                        <FiTrash2 size={20} color={"#a8a8b3"} />                 
-                    </button>
-                </li>
-
-                <li>
-                    <strong>CASE:</strong>
-                    <p>Test case</p>
-
-                    <strong>DESCRIPTION:</strong>
-                    <p>Test case</p>
-                    
-                    <strong>VALUE:</strong>
-                    <p>$120.00</p>
-
-                    <button type="button">  
-                        <FiTrash2 size={20} color={"#a8a8b3"} />                 
-                    </button>
-                </li>
-
-                <li>
-                    <strong>CASE:</strong>
-                    <p>Test case</p>
-
-                    <strong>DESCRIPTION:</strong>
-                    <p>Test case</p>
-                    
-                    <strong>VALUE:</strong>
-                    <p>$120.00</p>
-
-                    <button type="button">  
-                        <FiTrash2 size={20} color={"#a8a8b3"} />                 
-                    </button>
-                </li>
+                        <button type="button">  
+                            <FiTrash2 size={20} color={"#a8a8b3"} />                 
+                        </button>
+                    </li>
+                ))}
             </ul>
         </div>
     );
