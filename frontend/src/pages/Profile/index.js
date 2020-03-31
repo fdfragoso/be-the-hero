@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
 
 import api from '../../services/api';
@@ -13,6 +13,8 @@ export default function Profile() {
 
     const ngoName = localStorage.getItem('ngoName');
     const ngoId = localStorage.getItem('ngoId');
+
+    const history = useHistory();
 
     useEffect(() => {
         api.get('profile', {
@@ -37,6 +39,11 @@ export default function Profile() {
             alert('Error to delete case. Please try again');
         }
     }
+
+    function handleLogout() {
+        localStorage.clear();
+        history.push('/');
+    }
      
     return (
         <div className="profile-container">
@@ -45,7 +52,7 @@ export default function Profile() {
                     <span>Welcome, {ngoName}</span>
 
                 <Link className="button" to="/cases/new">Register new case</Link>
-                <button type="button">
+                <button onClick={handleLogout} type="button">
                     <FiPower size={18} color="#E02041" />
                 </button>
             </header>
