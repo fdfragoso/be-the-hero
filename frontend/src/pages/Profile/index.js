@@ -31,6 +31,8 @@ export default function Profile() {
                 Authorization: ngoId,
               }
             });
+
+            setCases(cases.filter(_case => _case.id !== id));
         } catch (err) {
             alert('Error to delete case. Please try again');
         }
