@@ -70,9 +70,7 @@ export default function NewCase() {
                 <input 
                     placeholder="Value in DKK"
                     value={value}
-                    onChange={e => setValue(e.target.value)}
-                />
-                
+                    onChange={e => setValue(e.target.value)}                
 
                 <button className="button" type="submit">Sign Up</button>
             </form>
